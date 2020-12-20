@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface UnsplashApi {
 
     companion object {
-        const val BASE_URL = "https://unsplash.com/"
+        const val BASE_URL = "https://api.unsplash.com/"
         const val API_KEY = BuildConfig.UNSPLASH_ACCESS_KEY
     }
 

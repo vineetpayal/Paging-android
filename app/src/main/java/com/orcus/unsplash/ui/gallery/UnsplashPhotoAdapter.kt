@@ -11,9 +11,12 @@ import com.orcus.unsplash.R
 import com.orcus.unsplash.data.UnsplashPhoto
 import com.orcus.unsplash.databinding.ItemUnsplashPhotoBinding
 
-class UnsplashPhotoAdapter() :
+class UnsplashPhotoAdapter(private val listener: OnItemClickListener) :
     PagingDataAdapter<UnsplashPhoto, UnsplashPhotoAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
+    interface OnItemClickListener {
+        fun onItemClick(photo: UnsplashPhoto)
+    }
 
     inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -27,6 +30,18 @@ class UnsplashPhotoAdapter() :
                     .into(imageView)
 
                 textViewUsername.text = photo.user.username
+            }
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onItemClick(item)
+                    }
+                }
             }
         }
     }
